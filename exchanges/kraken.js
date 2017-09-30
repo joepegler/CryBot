@@ -2,7 +2,6 @@ module.exports = (function () {
     "use strict";
     const _ = require('lodash');
     const moment = require('moment');
-    const uuid = require('uuid');
 
     const config = require('../config').exchanges.kraken;
     const pairData = config.pairs;
@@ -34,7 +33,7 @@ module.exports = (function () {
                                 pair: pairs[i],
                                 amount: res[1],
                                 rate: res[0],
-                                id: uuid.v4(),
+                                id: null,
                                 type: res[3] === 's' ? 'sell' : 'buy',
                                 exchange: 'kraken'
                             };
@@ -42,7 +41,7 @@ module.exports = (function () {
                         });
                     });
                 }).catch(console.error);
-            }, 5000);
+            }, 1000);
 
         }
     }

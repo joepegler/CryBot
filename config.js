@@ -13,13 +13,13 @@ module.exports = {
         },
         bitfinex : {
             pairs: {
-                btcusd: 'BTCUSD',
-                ltcbtc:'LTCBTC',
-                ethbtc:'ETHBTC'
+                btcusd: 'tBTCUSD',
+                ltcbtc:'tLTCBTC',
+                ethbtc:'tETHBTC'
             },
             url: {
                 rest: '',
-                ws: 'wss://api.poloniex.com'
+                ws: 'wss://api.bitfinex.com/ws/2'
             }
         },
         gdax : {
@@ -30,7 +30,7 @@ module.exports = {
             },
             url: {
                 rest: '',
-                ws: 'wss://api.poloniex.com'
+                ws: ''
             }
         },
         kraken : {

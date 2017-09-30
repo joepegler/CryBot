@@ -9,9 +9,9 @@ module.exports = (function () {
     const gdax = require('./exchanges/gdax');
     const kraken = require('./exchanges/kraken');
 
-    // poloniex.init(db, pairs);
-    // bitfinex.init(db, pairs);
+    poloniex.init(db, pairs);
+    bitfinex.init(db, pairs);
     gdax.init(db, pairs);
-    // kraken.init(db, pairs);
+    kraken.init(db, pairs);
 
 })();
