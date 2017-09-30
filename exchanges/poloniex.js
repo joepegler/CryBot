@@ -25,7 +25,7 @@ module.exports = (function () {
             };
 
             connection.onclose = function (e) {
-                console.log("Websocket connection closed: " + e.toString());
+                console.log(e.toString());
             };
 
             connection.open();

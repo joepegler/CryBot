@@ -55,10 +55,7 @@ module.exports = (function () {
             };
 
             ws.onopen = listen;
-
-            ws.onerror = (err) => {
-                console.error(err);
-            };
+            ws.onerror = console.error;
 
             function authenticate() {
                 // const crypto = require('crypto-js');

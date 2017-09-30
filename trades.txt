@@ -1,0 +1,6 @@
+
+[POLONIEX] {"type":"newTrade","data":{"amount":"0.04920612","date":"2017-09-02 02:05:40","rate":"4941.00000004","total":"243.12743892","tradeID":"7869792","type":"sell"}}
+[POLONIEX] {"type":"newTrade","data":{"amount":"0.00404858","date":"2017-09-02 02:05:40","rate":"4941.00000000","total":"20.00403378","tradeID":"7869793","type":"sell"}}
+[POLONIEX] {"type":"newTrade","data":{"amount":"0.14713440","date":"2017-09-02 02:05:40","rate":"4937.38778802","total":"726.45958975","tradeID":"7869794","type":"sell"}}
+[POLONIEX] {"type":"newTrade","data":{"amount":"0.01229765","date":"2017-09-02 02:05:44","rate":"4941.00000004","total":"60.76268865","tradeID":"7869795","type":"buy"}}
+[BITFINEX] {"ID":70716769,"MTS":1506458987000,"AMOUNT":0.010923,"PRICE":3913.2}

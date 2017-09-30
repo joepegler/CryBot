@@ -5,7 +5,10 @@ module.exports = (function () {
 
     return {
         write : (exchangeName, table, object) => {
-            fs.appendFile("./" + table + ".txt", '\n[' + exchangeName.toUpperCase() + '] ' + JSON.stringify(object), () => {});
+            let message = `\n[${exchangeName.toUpperCase()}] ` + JSON.stringify(object);
+            // fs.appendFile("./" + table + ".txt", message, () => { console.log(message); });
+
+            console.log(message);
         }
     }
 
