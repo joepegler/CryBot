@@ -7,7 +7,6 @@ module.exports = (function () {
         write : (exchangeName, table, object) => {
             let message = `\n[${exchangeName.toUpperCase()}] ` + JSON.stringify(object);
             // fs.appendFile("./" + table + ".txt", message, () => { console.log(message); });
-
             console.log(message);
         }
     }

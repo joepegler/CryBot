@@ -1,10 +1,13 @@
 module.exports = (function () {
     "use strict";
     const Gdax = require('gdax');
+    const config = require('../config').exchanges.gdax;
+    const pairData = config.pairs;
 
     return {
-        init: function(db) {
-            const websocket = new Gdax.WebsocketClient(['BTC-USD']);
+        init: function(db, pairs) {
+            let exPairNames = Object.values(pairData);
+            const websocket = new Gdax.WebsocketClient(exPairNames);
             websocket.on('message', data => {
                 switch(data.type){
                     case 'done':
@@ -20,6 +23,5 @@ module.exports = (function () {
             websocket.on('close', console.error);
         }
     }
-
 
 })();

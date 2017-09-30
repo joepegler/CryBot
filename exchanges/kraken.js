@@ -2,39 +2,48 @@ module.exports = (function () {
     "use strict";
     const _ = require('lodash');
     const moment = require('moment');
+    const uuid = require('uuid');
+
+    const config = require('../config').exchanges.kraken;
+    const pairData = config.pairs;
 
     return {
-        init: (db)=>{
+        init: (db, pairs)=>{
             const KrakenClient = require('@warren-bank/node-kraken-api');
-            const kraken = new KrakenClient('mdov1KdvS7RzdWHjkj8+ZA4C3nKAxrnv8v+SCjByO2Ves2FF2mpIMtV0', 'Pr7csyWHfhKG6p6+XIBJ3r7VdG5vvAtpPwD8oOdjjwACTz6qAJ02YiTEqLFkl8uCBaMDVxDrABKPxZMD66uYow==', {timeout: 10000});
-
-            const fields = ['price', 'volume', 'time', 'buy/sell', 'market/limit', 'miscellaneous'];
-            let lastId = '';
-            const pair = 'XBTUSD';
-
+            const kraken = new KrakenClient();
+            let lastId;
             setInterval(()=>{
-                // Public API method: Get Ticker Info
-                console.info('\n');
-                kraken.api('Trades', {'pair': pair, 'since': lastId}).then((result) => {
-                    // lastId = result.last;
-
-                    // let resArr = [];
-                    //
-                    // _.each(result['XXBTZUSD'], (res) =>{
-                    //
-                    //     _.each(fields, (key, i) => {
-                    //         let resO  { [key]: key === 'time' ? moment(parseInt(res[i]).unix).format('DD-MM HH:mm:ss') : res[i] };
-                    //     });
-                    //
-                    //     resArr.push(fields.map((key, i) => {
-                    //         return { [key]: key === 'time' ? moment(parseInt(res[i]).unix).format('DD-MM HH:mm:ss') : res[i] };
-                    //     }));
-                    // });
-                    //
-                    // console.info(resArr);
-
+                let promises = pairs.map((pair, i) => {
+                    return new Promise((resolve, reject) => {
+                        if (_.includes(Object.keys(pairData), pair)) {
+                            let exPairName = pairData[pair];
+                            resolve(kraken.api('Trades', {'pair': exPairName, 'since': lastId}));
+                        }
+                        else{
+                            reject('Wrong pair');
+                        }
+                    });
+                });
+                Promise.all(promises).then(results => {
+                    _.each(results, (result, i) => {
+                        let exPairName = pairData[pairs[i]];
+                        lastId = result.last;
+                        _.each(result[exPairName], (res) => {
+                            let obj = {
+                                datetime: moment(parseInt(res[2]).unix).format('YYYY-DD-MM HH:mm:ss'),
+                                pair: pairs[i],
+                                amount: res[1],
+                                rate: res[0],
+                                id: uuid.v4(),
+                                type: res[3] === 's' ? 'sell' : 'buy',
+                                exchange: 'kraken'
+                            };
+                            db.write('kraken', 'trades', obj);
+                        });
+                    });
                 }).catch(console.error);
             }, 5000);
+
         }
     }
 

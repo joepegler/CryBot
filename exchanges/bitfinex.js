@@ -4,9 +4,8 @@ module.exports = (function () {
     const _ = require('lodash');
     const WebSocket = require('ws');
 
-
     return {
-        init: function(db){
+        init: function(db, pairs){
 
             let ws = new WebSocket('wss://api.bitfinex.com/ws/2');
             let channels = [];
