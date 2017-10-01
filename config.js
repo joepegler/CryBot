@@ -1,17 +1,25 @@
 module.exports = {
     exchanges: {
         poloniex : {
+            credentials:{
+                key: '',
+                secret: ''
+            },
             pairs: {
-                btcusd: 'USDT_BTC',
+                btcusd:'USDT_BTC',
                 ltcbtc:'BTC_LTC',
                 ethbtc:'BTC_ETH'
             },
             url: {
                 rest: '',
-                ws: 'wss://api.poloniex.com'
+                ws: 'wss://api2.poloniex.com'
             }
         },
         bitfinex : {
+            credentials:{
+                key: '',
+                secret: ''
+            },
             pairs: {
                 btcusd: 'tBTCUSD',
                 ltcbtc:'tLTCBTC',
@@ -23,6 +31,10 @@ module.exports = {
             }
         },
         gdax : {
+            credentials:{
+                key: '',
+                secret: ''
+            },
             pairs: {
                 btcusd: 'BTC-USD',
                 ltcbtc:'LTC-BTC',
@@ -34,6 +46,10 @@ module.exports = {
             }
         },
         kraken : {
+            credentials:{
+                key: '',
+                secret: ''
+            },
             pairs: {
                 btcusd: 'XXBTZUSD',
                 ltcbtc: 'XLTCXXBT',

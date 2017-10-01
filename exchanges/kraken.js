@@ -29,10 +29,10 @@ module.exports = (function () {
                         lastId = result.last;
                         _.each(result[exPairName], (res) => {
                             let obj = {
-                                datetime: moment(parseInt(res[2]).unix).format('YYYY-DD-MM HH:mm:ss'),
+                                ts: parseInt(res[2]),
                                 pair: pairs[i],
-                                amount: res[1],
-                                rate: res[0],
+                                amount: parseFloat(res[1]),
+                                rate: parseFloat(res[0]),
                                 id: null,
                                 type: res[3] === 's' ? 'sell' : 'buy',
                                 exchange: 'kraken'
@@ -41,7 +41,7 @@ module.exports = (function () {
                         });
                     });
                 }).catch(console.error);
-            }, 1000);
+            }, 5000);
 
         }
     }

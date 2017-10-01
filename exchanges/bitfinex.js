@@ -21,10 +21,10 @@ module.exports = (function () {
                 }
                 else if( data[1] === 'tu' ){
                     let res = {
-                        datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
-                        pair:  _.invert(channels)[data[0]],
-                        amount:  Math.abs(data[2][2]),
-                        rate: data[2][3],
+                        ts: parseInt(data[2][1]/1000),
+                        pair: _.invert(channels)[data[0]],
+                        amount:  parseFloat(Math.abs(data[2][2])),
+                        rate: parseFloat(data[2][3]),
                         id: null,
                         type: data[2][2] > 0 ? 'buy' : 'sell',
                         exchange: 'bitfinex'

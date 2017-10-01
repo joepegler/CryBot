@@ -14,10 +14,10 @@ module.exports = (function () {
                 switch(data.type){
                     case 'received':
                         let res = {
-                            datetime: moment(data.time).format('YYYY-MM-DD HH:mm:ss'),
+                            ts: parseInt( moment(data.time).unix() ),
                             pair: _.invert(pairData)[data.product_id],
-                            amount:  data.size,
-                            rate: data.price,
+                            amount: parseFloat(data.size),
+                            rate: parseFloat(data.price),
                             id: data.order_id,
                             type: data.side,
                             exchange: 'gdax'
