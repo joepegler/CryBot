@@ -13,8 +13,8 @@ module.exports = (function () {
              if(validator.price(object)){
                  let message = `\n[${exchangeName.toUpperCase()}] ` + JSON.stringify(object);
                  // fs.appendFile("./" + table + ".txt", message, () => { console.log(message); });
-                 // console.log(message);
-                 io.emit('price', object);
+                 console.log(message);
+                 // io.emit('price', object);
              }
         },
     }

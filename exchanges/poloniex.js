@@ -12,9 +12,6 @@ module.exports = (function () {
         init: function(db, pairs){
             let connection = new autobahn.Connection({ url: wsUrl, realm: 'realm1' });
             connection.onopen = function (session) {
-
-                console.info('opened...');
-
                 _.each(pairs, pair => {
                     if ( _.includes(Object.keys(pairData), pair)){
                         let exPairName = pairData[pair];
@@ -45,11 +42,7 @@ module.exports = (function () {
 
             };
 
-            connection.onclose = function (e, e2) {
-                console.log(JSON.stringify(e));
-                console.log(JSON.stringify(e2));
-            };
-
+            // connection.onclose = console.error;
             connection.onerror = console.error;
 
             connection.open();

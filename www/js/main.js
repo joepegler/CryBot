@@ -13,10 +13,14 @@ const seriesOptions = [
     { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.1)', lineWidth: 3 },
     { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.1)', lineWidth: 3 },
     { strokeStyle: 'rgba(0, 0, 255, 1)', fillStyle: 'rgba(0, 0, 255, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(0, 255, 255, 1)', fillStyle: 'rgba(0, 255, 255, 0.1)', lineWidth: 3 },
     { strokeStyle: 'rgba(255, 255, 0, 1)', fillStyle: 'rgba(255, 255, 0, 0.1)', lineWidth: 3 }
 ];
 
 function init() {
+
+    console.info('init');
+
     socket.on('price', pricePoint => {
         // { ts, pair, amount, rate, id, type, exchange }
         if(!prices[pricePoint.pair]) {

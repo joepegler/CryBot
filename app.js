@@ -16,6 +16,7 @@ module.exports = (function () {
 
     const db = require('./utils/database');
     const poloniex = require('./exchanges/poloniex');
+    const bittrex = require('./exchanges/bittrex');
     const bitfinex = require('./exchanges/bitfinex');
     const gdax = require('./exchanges/gdax');
     const kraken = require('./exchanges/kraken');
@@ -24,9 +25,10 @@ module.exports = (function () {
 
     db.init(io);
 
-    // poloniex.init(db, pairs);
+    poloniex.init(db, pairs);
     bitfinex.init(db, pairs);
-    gdax.init(db, pairs);
+    bittrex.init(db, pairs);
+    // gdax.init(db, pairs);
     kraken.init(db, pairs);
 
 })();
