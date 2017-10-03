@@ -9,14 +9,14 @@ module.exports = (function () {
 
     return {
         init: (db, pairs) => {
-            let exchangePairs = Object.values(pairData).filter(exchangePair => { return pairs.includes(_.invert(pairData)[exchangePair]); });
+            let exchangePairs = _.values(pairData).filter(exchangePair => { return _.includes(pairs, _.invert(pairData)[exchangePair]); });
             bittrex.websockets.client(function () {
-                bittrex.websockets.subscribe(Object.values(pairData), function (data) {
+                bittrex.websockets.subscribe(_.values(pairData), function (data) {
                     if (data.M === 'updateExchangeState') {
                         _.each(data.A, dataPoints => {
                             _.each(dataPoints.Fills, fill => {
                                 let res = {
-                                    ts: parseInt( moment(fill.TimeStamp).unix() ),
+                                    ts: parseInt( moment(fill.TimeStamp).add(1, 'hour').unix() ),
                                     pair: _.invert(pairData)[dataPoints.MarketName],
                                     amount: parseFloat(fill.Quantity),
                                     rate: parseFloat(fill.Rate),

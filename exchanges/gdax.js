@@ -8,25 +8,20 @@ module.exports = (function () {
 
     return {
         init: function(db, pairs) {
-            let exPairNames = Object.values(pairData);
+            let exPairNames = _.values(pairData);
             const websocket = new Gdax.WebsocketClient(exPairNames);
             websocket.on('message', data => {
-                switch(data.type){
-                    case 'received':
-                        let res = {
-                            ts: parseInt( moment(data.time).unix() ),
-                            pair: _.invert(pairData)[data.product_id],
-                            amount: parseFloat(data.size),
-                            rate: parseFloat(data.price),
-                            id: data.order_id,
-                            type: data.side,
-                            exchange: 'gdax'
-                        };
-                        db.write('gdax', 'trades', res);
-                        break;
-                    case 'open':
-                        // db.write('gdax', 'orders', data);
-                        break;
+                if ( (data.type === 'done' && data.reason === 'filled') || data.type === 'match' ){
+                    let res = {
+                        ts: parseInt( moment(data.time).unix() ),
+                        pair: _.invert(pairData)[data.product_id],
+                        amount: parseFloat(data.size),
+                        rate: parseFloat(data.price),
+                        id: data.order_id,
+                        type: data.side,
+                        exchange: 'gdax'
+                    };
+                    db.write('gdax', 'trades', res);
                 }
             });
             websocket.on('error', console.error);

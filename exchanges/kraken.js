@@ -28,6 +28,9 @@ module.exports = (function () {
                         let exPairName = pairData[pairs[i]];
                         lastId = result.last;
                         _.each(result[exPairName], (res) => {
+
+                            // console.info(res);
+
                             let obj = {
                                 ts: parseInt(res[2]),
                                 pair: pairs[i],
