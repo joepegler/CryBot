@@ -1,5 +1,35 @@
 module.exports = {
     exchanges: {
+        bitstamp : {
+            credentials:{
+                key: '',
+                secret: ''
+            },
+            pairs: {
+                btcusd:'btcusd',
+                ltcbtc:'ltcbtc',
+                ethbtc:'ethbtc'
+            },
+            url: {
+                rest: '',
+                ws: ''
+            }
+        },
+        bittrex : {
+            credentials:{
+                key: '',
+                secret: ''
+            },
+            pairs: {
+                btcusd:'USDT-BTC',
+                ltcbtc:'BTC-LTC',
+                ethbtc:'BTC-ETH'
+            },
+            url: {
+                rest: '',
+                ws: ''
+            }
+        },
         poloniex : {
             credentials:{
                 key: '',
