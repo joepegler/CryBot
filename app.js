@@ -19,14 +19,16 @@ module.exports = (function () {
     const bitfinex = require('./exchanges/bitfinex');
     const gdax = require('./exchanges/gdax');
     const kraken = require('./exchanges/kraken');
+    const hitbtc = require('./exchanges/hitbtc');
 
     const pairs = ['btcusd', 'ltcbtc', 'ethbtc'];
 
     db.init(io);
 
     // poloniex.init(db, pairs);
-    bitfinex.init(db, pairs);
-    gdax.init(db, pairs);
-    kraken.init(db, pairs);
+    // bitfinex.init(db, pairs);
+    // gdax.init(db, pairs);
+    // kraken.init(db, pairs);
+    hitbtc.init(db, pairs);
 
 })();

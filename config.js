@@ -59,6 +59,21 @@ module.exports = {
                 rest: '',
                 ws: ''
             }
+        },
+        hitbtc : {
+            credentials:{
+                key: '',
+                secret: ''
+            },
+            pairs: {
+                btcusd: 'BTCUSD',
+                ltcbtc: 'LTCBTC',
+                ethbtc: 'ETHBTC'
+            },
+            url: {
+                rest: '',
+                ws: ''
+            }
         }
     }
 };

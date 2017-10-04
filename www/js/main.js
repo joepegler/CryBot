@@ -44,10 +44,10 @@ function createCanvas(pair){
     canvas.width = 500;
     canvas.height = 200;
 
-    let h2 = document.createElement("h2");
-    h2.textContent = pair.toUpperCase();
+    let h3 = document.createElement("h3");
+    h3.textContent = pair;
 
     let body = document.getElementsByTagName("body")[0];
-    body.appendChild(h2);
+    body.appendChild(h3);
     body.appendChild(canvas);
 }
