@@ -102,7 +102,7 @@ module.exports = {
             },
             url: {
                 rest: '',
-                ws: ''
+                ws: 'api.hitbtc.com'
             }
         }
     }
