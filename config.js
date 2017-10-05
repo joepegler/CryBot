@@ -101,7 +101,7 @@ module.exports = {
                 ethbtc: 'ETHBTC'
             },
             url: {
-                rest: '',
+                rest: 'http://api.hitbtc.com',
                 ws: 'api.hitbtc.com'
             }
         }

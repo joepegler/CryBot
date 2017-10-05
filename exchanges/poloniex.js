@@ -39,7 +39,6 @@ module.exports = (function () {
                         });
                     }
                 });
-
             };
 
             // connection.onclose = console.error;

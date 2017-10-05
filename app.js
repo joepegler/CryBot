@@ -26,11 +26,11 @@ module.exports = (function () {
 
     db.init(io);
 
-    // poloniex.init(db, pairs);
+    poloniex.init(db, pairs);
     hitbtc.init(db, pairs);
-    // bitfinex.init(db, pairs);
-    // bittrex.init(db, pairs);
-    // gdax.init(db, pairs);
-    // kraken.init(db, pairs);
+    bitfinex.init(db, pairs);
+    bittrex.init(db, pairs);
+    gdax.init(db, pairs);
+    kraken.init(db, pairs);
 
 })();
