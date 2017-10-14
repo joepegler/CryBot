@@ -7,33 +7,34 @@ module.exports = (function () {
 
     return {
         price: (p) => {
+            let err = '';
             if (!p.exchange){
-                console.error('No exchange: ' + p.exchange );
                 return false;
             }
             else if ( !moment(p.ts).isValid() ){
-                console.error('[' + p.exchange.toUpperCase() + '] ' + 'Invalid timestamp: ' + p.ts);
+                // err = '[' + p.exchange.toUpperCase() + '] ' + 'Invalid timestamp: ' + p.ts;
                 return false;
             }
             else if (!p.pair){
-                console.error('[' + p.exchange.toUpperCase() + '] ' + 'Invalid pair: ' + p.pair);
+                // err = '[' + p.exchange.toUpperCase() + '] ' + 'Invalid pair: ' + p.pair;
                 return false;
             }
             else if (!_.isNumber(p.amount) || p.amount === 0 || p.amount === null || p.amount === 'null' || !p.amount){
-                console.error('[' + p.exchange.toUpperCase() + '] ' + 'Invalid amount: ' + p.amount );
+                // err = '[' + p.exchange.toUpperCase() + '] ' + 'Invalid amount: ' + p.amount ;
                 return false;
             }
             else if (!_.isNumber(p.rate) || p.rate === 0 || p.rate === null || p.rate === 'null' || !p.rate){
-                console.error('[' + p.exchange.toUpperCase() + '] ' + 'Invalid rate: ' + p.rate );
+                // err = '[' + p.exchange.toUpperCase() + '] ' + 'Invalid rate: ' + p.rate ;
                 return false;
             }
             else if (!p.type){
-                console.error('[' + p.exchange.toUpperCase() + '] ' + 'No type: ' + p.type );
+                // err = '[' + p.exchange.toUpperCase() + '] ' + 'No type: ' + p.type ;
                 return false;
             }
             else {
                 return true;
             }
+            // console.error(err);
         }
     }
 

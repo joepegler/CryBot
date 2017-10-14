@@ -24,6 +24,7 @@
     "moment": "^2.18.1",
     "net": "^1.0.2",
     "node-bittrex-api": "^0.7.6",
+    "node-schedule": "^1.2.5",
     "poloniex-api-node": "^1.3.1",
     "promise": "^8.0.1",
     "request": "^2.83.0",
