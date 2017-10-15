@@ -1,13 +1,10 @@
-module.exports = (function () {
-
+module.exports = (function() {
     "use strict";
     const _ = require('lodash');
     const WebSocket = require('ws');
-
     const config = require('../config').exchanges.binance;
     const wsUrl = config.url.ws;
     const pairData = config.pairs;
-
     return {
         init: function(fileWriter, pairs) {
             let exchangePairs = _.values(pairData).filter(exchangePair => { return _.includes(pairs, _.invert(pairData)[exchangePair]); });
@@ -42,5 +39,4 @@ module.exports = (function () {
             })
         }
     }
-
 })();

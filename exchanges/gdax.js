@@ -1,18 +1,17 @@
-module.exports = (function () {
+module.exports = (function() {
     "use strict";
     const Gdax = require('gdax');
     const moment = require('moment');
     const _ = require('lodash');
     const config = require('../config').exchanges.gdax;
     const pairData = config.pairs;
-
     return {
         init: function(fileWriter, pairs) {
             let exchangePairs = _.values(pairData).filter(exchangePair => { return _.includes(pairs, _.invert(pairData)[exchangePair]); });
             exchangePairs.forEach(ePair => {
-                const websocket = new Gdax.WebsocketClient( ePair );
+                const websocket = new Gdax.WebsocketClient(ePair);
                 websocket.on('message', data => {
-                    if ( data.type === 'match' ){
+                    if(data.type === 'match') {
                         // {
                         //     type: 'done',
                         //     side: 'buy',
@@ -23,7 +22,7 @@ module.exports = (function () {
                         //     time: '2017-10-15T20:30:32.203000Z'
                         // }
                         let res = {
-                            ts: parseInt( moment(data.time).unix() ),
+                            ts: parseInt(moment(data.time).unix()),
                             pair: _.invert(pairData)[data.product_id],
                             amount: parseFloat(data.size),
                             rate: parseFloat(data.price),
@@ -39,5 +38,4 @@ module.exports = (function () {
             });
         }
     }
-
 })();
