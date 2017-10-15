@@ -1,7 +1,6 @@
 module.exports = (function() {
     "use strict";
     const _ = require('lodash');
-    const moment = require('moment');
     const WebSocket = require('ws');
     const config = require('../config').exchanges.bitfinex;
     const wsUrl = config.url.ws;
