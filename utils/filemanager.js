@@ -24,7 +24,7 @@ module.exports = (function () {
         write : (exchangeName, object) => {
              if(validator.price(object)){
                  let message = JSON.stringify(object, null, 0) + ',';
-                 fs.appendFile(fileOne, message, () => {io.emit('price', object);});
+                 fs.appendFile(fileOne, message, () => { io && io.emit('price', object); });
              }
         }
     }

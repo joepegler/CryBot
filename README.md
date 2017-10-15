@@ -13,4 +13,10 @@ npm install
 npm start
 ```
 
+To run the project with a basic UI:
+
+```sh
+npm start ui
+```
+
 Your app should now be running on [localhost:3005](http://localhost:3005/). View the console to see the trade log.
