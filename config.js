@@ -1,7 +1,22 @@
 module.exports = {
     exchanges: {
-        bitstamp : {
+        binance: {
             credentials:{
+                key: '',
+                secret: ''
+            },
+            pairs: {
+                btcusd:'btcusdt',
+                ltcbtc:'ltcbtc',
+                ethbtc:'ethbtc'
+            },
+            url: {
+                rest: '',
+                ws: 'wss://stream.binance.com:9443/ws'
+            }
+        },
+        bitstamp : {
+            credentials: {
                 key: '',
                 secret: ''
             },

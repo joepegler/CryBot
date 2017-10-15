@@ -3,9 +3,12 @@ module.exports = (function () {
 
     const express = require('express'),
         app = express(),
+        _ = require('lodash'),
         helmet = require('helmet'),
         http = require('http').Server(app),
-        io = require('socket.io')(http);
+        io = require('socket.io')(http),
+        exchangeConfigs = require('./config').exchanges,
+        db = require('./utils/database');
 
     app.use(helmet.hidePoweredBy({setTo: 'PHP/5.4.0'}));
     app.use(express.static(__dirname + '/www'));
@@ -14,23 +17,13 @@ module.exports = (function () {
         console.log('listening on', 3005);
     });
 
-    const db = require('./utils/database');
-    const poloniex = require('./exchanges/poloniex');
-    const bittrex = require('./exchanges/bittrex');
-    const bitfinex = require('./exchanges/bitfinex');
-    const gdax = require('./exchanges/gdax');
-    const kraken = require('./exchanges/kraken');
-    const hitbtc = require('./exchanges/hitbtc');
+    db.init(io);
 
     const pairs = ['btcusd', 'ltcbtc', 'ethbtc'];
 
-    db.init(io);
-
-    poloniex.init(db, pairs);
-    hitbtc.init(db, pairs);
-    bitfinex.init(db, pairs);
-    bittrex.init(db, pairs);
-    gdax.init(db, pairs);
-    kraken.init(db, pairs);
+    _.each(exchangeConfigs, (exchangeConfig, exchangeName) => {
+        let exchange = require('./exchanges/' + exchangeName);
+        exchange.init(db, pairs);
+    });
 
 })();

@@ -27,7 +27,7 @@ module.exports = (function () {
                 // err = '[' + p.exchange.toUpperCase() + '] ' + 'Invalid rate: ' + p.rate ;
                 return false;
             }
-            else if (!p.type){
+            else if (!_.includes(['buy','sell', null], p.type)){
                 // err = '[' + p.exchange.toUpperCase() + '] ' + 'No type: ' + p.type ;
                 return false;
             }

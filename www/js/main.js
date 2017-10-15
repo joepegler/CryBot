@@ -25,46 +25,49 @@ let prices = {
 
 let exchangeOptions = {};
 const seriesOptions = [
-    { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.1)', lineWidth: 3 },
-    { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.1)', lineWidth: 3 },
-    { strokeStyle: 'rgba(0, 0, 255, 1)', fillStyle: 'rgba(0, 0, 255, 0.1)', lineWidth: 3 },
-    { strokeStyle: 'rgba(0, 255, 255, 1)', fillStyle: 'rgba(0, 255, 255, 0.1)', lineWidth: 3 },
-    { strokeStyle: 'rgba(255, 255, 0, 1)', fillStyle: 'rgba(255, 255, 0, 0.1)', lineWidth: 3 }
+    { strokeStyle: 'rgba(230, 25, 75, 1)', fillStyle: 'rgba(230, 25, 75, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(60, 180, 75, 1)', fillStyle: 'rgba(60, 180, 75, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(255, 225, 25, 1)', fillStyle: 'rgba(255, 225, 25, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(0, 130, 200, 1)', fillStyle: 'rgba(0, 130, 200, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(245, 130, 48, 1)', fillStyle: 'rgba(245, 130, 48, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(145, 30, 180, 1)', fillStyle: 'rgba(145, 30, 180, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(70, 240, 240, 1)', fillStyle: 'rgba(70, 240, 240, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(240, 50, 230, 1)', fillStyle: 'rgba(240, 50, 230, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(210, 245, 60, 1)', fillStyle: 'rgba(210, 245, 60, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(250, 190, 190, 1)', fillStyle: 'rgba(250, 190, 190, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(0, 128, 128, 1)', fillStyle: 'rgba(0, 128, 128, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(230, 190, 255, 1)', fillStyle: 'rgba(230, 190, 255, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(170, 110, 40, 1)', fillStyle: 'rgba(170, 110, 40, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(255, 250, 200, 1)', fillStyle: 'rgba(255, 250, 200, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(128, 0, 0, 1)', fillStyle: 'rgba(128, 0, 0, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(170, 255, 195, 1)', fillStyle: 'rgba(170, 255, 195, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(128, 128, 0, 1)', fillStyle: 'rgba(128, 128, 0, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(255, 215, 180, 1)', fillStyle: 'rgba(255, 215, 180, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(0, 0, 128, 1)', fillStyle: 'rgba(0, 0, 128, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(128, 128, 128, 1)', fillStyle: 'rgba(128, 128, 128, 0.1)', lineWidth: 3 }
 ];
 
 function init() {
 
-
-
     socket.on('price', pricePoint => {
         // { ts, pair, amount, rate, id, type, exchange }
-
-        // if(pricePoint.exchange === 'bittrex'){
-            console.info(pricePoint.exchange + ': ' + JSON.stringify(pricePoint));
-
-
-            if(!prices[pricePoint.pair]) {
-                prices[pricePoint.pair] = {};
-                if(!prices[pricePoint.pair].chart){
-                    createCanvas(pricePoint.pair);
-                    prices[pricePoint.pair].chart = new SmoothieChart(smoothieOptions);
-                    prices[pricePoint.pair].chart.streamTo(document.getElementById(pricePoint.pair + '-canvas'), 1000);
-                }
+        console.info(pricePoint.exchange + ': ' + JSON.stringify(pricePoint));
+        if(!prices[pricePoint.pair]) {
+            prices[pricePoint.pair] = {};
+            if(!prices[pricePoint.pair].chart){
+                createCanvas(pricePoint.pair);
+                prices[pricePoint.pair].chart = new SmoothieChart(smoothieOptions);
+                prices[pricePoint.pair].chart.streamTo(document.getElementById(pricePoint.pair + '-canvas'), 1000);
             }
-            if(!prices[pricePoint.pair][pricePoint.exchange]){
-                prices[pricePoint.pair][pricePoint.exchange] = new TimeSeries();
-                if(!exchangeOptions[pricePoint.exchange]) {
-                    exchangeOptions[pricePoint.exchange] = seriesOptions.shift();
-                }
-                prices[pricePoint.pair].chart.addTimeSeries(prices[pricePoint.pair][pricePoint.exchange], exchangeOptions[pricePoint.exchange]);
+        }
+        if(!prices[pricePoint.pair][pricePoint.exchange]){
+            prices[pricePoint.pair][pricePoint.exchange] = new TimeSeries();
+            if(!exchangeOptions[pricePoint.exchange]) {
+                exchangeOptions[pricePoint.exchange] = seriesOptions.shift();
             }
-            prices[pricePoint.pair][pricePoint.exchange].append( pricePoint.ts * 1000, pricePoint.rate );
-
-            // console.info(pricePoint.exchange + ': ' + JSON.stringify(prices));
-
-        // }
-
-
+            prices[pricePoint.pair].chart.addTimeSeries(prices[pricePoint.pair][pricePoint.exchange], exchangeOptions[pricePoint.exchange]);
+        }
+        prices[pricePoint.pair][pricePoint.exchange].append( pricePoint.ts * 1000, pricePoint.rate );
     });
 }
 
