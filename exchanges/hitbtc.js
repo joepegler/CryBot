@@ -20,16 +20,15 @@ module.exports = (function() {
                                 body = JSON.parse(body);
                                 if(body && body.trades) {
                                     _.each(body.trades, trade => {
-                                        let res = {
-                                            ts: moment(trade[3]).add(0, 'hours').unix(),
-                                            pair: pair,
+                                        fileWriter.write('hitbtc', {
+                                            date: moment(trade[3]).add(0, 'hours').unix(),
+                                            symbol: pair,
                                             amount: parseFloat(trade[2]),
-                                            rate: parseFloat(trade[1]),
+                                            price: parseFloat(trade[1]),
                                             id: trade[0],
-                                            type: trade[4],
+                                            sell: trade[4] === 'sell',
                                             exchange: 'hitbtc'
-                                        };
-                                        fileWriter.write('hitbtc', res);
+                                        });
                                     });
                                     let last = _.last(body.trades);
                                     if(last) lastTradeTs[pair] = _.last(body.trades)[3];

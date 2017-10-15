@@ -15,16 +15,15 @@ module.exports = (function() {
                         let exPairName = pairData[pair];
                         session.subscribe(exPairName, function(events) {
                             if(event.type === 'newTrade') {
-                                let res = {
-                                    ts: moment(event.data.date).unix(),
-                                    pair: pair,
+                                fileWriter.write('poloniex', {
+                                    date: moment(event.data.date).unix(),
+                                    symbol: pair,
                                     amount: parseFloat(event.data.total),
-                                    rate: parseFloat(event.data.rate),
+                                    price: parseFloat(event.data.rate),
                                     id: event.data.tradeID,
-                                    type: event.data.type,
+                                    sell: event.data.type === 'sell',
                                     exchange: 'poloniex'
-                                };
-                                fileWriter.write('poloniex', res);
+                                });
                             }
                         });
                     }

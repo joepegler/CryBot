@@ -21,16 +21,15 @@ module.exports = (function() {
                         //     sequence: 4208090442,
                         //     time: '2017-10-15T20:30:32.203000Z'
                         // }
-                        let res = {
-                            ts: parseInt(moment(data.time).unix()),
-                            pair: _.invert(pairData)[data.product_id],
+                        fileWriter.write('gdax', {
+                            date: parseInt(moment(data.time).unix()),
+                            symbol: _.invert(pairData)[data.product_id],
                             amount: parseFloat(data.size),
-                            rate: parseFloat(data.price),
+                            price: parseFloat(data.price),
                             id: data['taker_order_id'],
-                            type: data.side,
+                            sell: data.side === 'sell',
                             exchange: 'gdax'
-                        };
-                        fileWriter.write('gdax', res);
+                        });
                     }
                 });
                 websocket.on('error', console.error);

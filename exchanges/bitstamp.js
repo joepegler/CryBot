@@ -12,16 +12,15 @@ module.exports = (function() {
                 exchangePairs.forEach(ePair => {
                     bitstamp.transactions(ePair, function(err, trades) {
                         _.each(trades, trade => {
-                            let res = {
-                                ts: parseInt(trade.date),
-                                pair: _.invert(pairData)[ePair],
+                            fileWriter.write('bitstamp', {
+                                date: parseInt(trade.date),
+                                symbol: _.invert(pairData)[ePair],
                                 amount: parseFloat(trade.amount),
-                                rate: parseFloat(trade.price),
+                                price: parseFloat(trade.price),
                                 id: trade.tid,
-                                type: parseInt(trade.type) === 1 ? 'sell' : 'buy',
+                                sell: parseInt(trade.type) === 1,
                                 exchange: 'bitstamp'
-                            };
-                            fileWriter.write('bitstamp', res);
+                            });
                         })
                     });
                 });

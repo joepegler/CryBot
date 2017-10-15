@@ -50,24 +50,32 @@ const seriesOptions = [
 function init() {
 
     socket.on('price', pricePoint => {
-        // { ts, pair, amount, rate, id, type, exchange }
+        // {
+        //     id : unique trade id (this trade id is unique to the exchange)
+        //     exchange : name of the exchange
+        //     symbol : currency pair (e.g. btcusd)
+        //     date : Epoch timestamp millisecond (Note: only second level precision is given by the exchange, last three digits of millisecond timestamp is '000')
+        //     price : in the quote currency (on a BTCEUR pair, the price is provided in EUR)
+        //     amount : in the base currency (on a BTCEUR pair, the amount is in BTC)
+        //     sell : boolean (TRUE or FALSE). Trade direction.
+        // }
         console.info(pricePoint.exchange + ': ' + JSON.stringify(pricePoint));
-        if(!prices[pricePoint.pair]) {
-            prices[pricePoint.pair] = {};
-            if(!prices[pricePoint.pair].chart){
-                createCanvas(pricePoint.pair);
-                prices[pricePoint.pair].chart = new SmoothieChart(smoothieOptions);
-                prices[pricePoint.pair].chart.streamTo(document.getElementById(pricePoint.pair + '-canvas'), 1000);
+        if(!prices[pricePoint.symbol]) {
+            prices[pricePoint.symbol] = {};
+            if(!prices[pricePoint.symbol].chart){
+                createCanvas(pricePoint.symbol);
+                prices[pricePoint.symbol].chart = new SmoothieChart(smoothieOptions);
+                prices[pricePoint.symbol].chart.streamTo(document.getElementById(pricePoint.symbol + '-canvas'), 1000);
             }
         }
-        if(!prices[pricePoint.pair][pricePoint.exchange]){
-            prices[pricePoint.pair][pricePoint.exchange] = new TimeSeries();
+        if(!prices[pricePoint.symbol][pricePoint.exchange]){
+            prices[pricePoint.symbol][pricePoint.exchange] = new TimeSeries();
             if(!exchangeOptions[pricePoint.exchange]) {
                 exchangeOptions[pricePoint.exchange] = seriesOptions.shift();
             }
-            prices[pricePoint.pair].chart.addTimeSeries(prices[pricePoint.pair][pricePoint.exchange], exchangeOptions[pricePoint.exchange]);
+            prices[pricePoint.symbol].chart.addTimeSeries(prices[pricePoint.symbol][pricePoint.exchange], exchangeOptions[pricePoint.exchange]);
         }
-        prices[pricePoint.pair][pricePoint.exchange].append( pricePoint.ts * 1000, pricePoint.rate );
+        prices[pricePoint.symbol][pricePoint.exchange].append( pricePoint.date * 1000, pricePoint.price );
     });
 }
 

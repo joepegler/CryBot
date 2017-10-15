@@ -13,16 +13,15 @@ module.exports = (function() {
                     if(data.M === 'updateExchangeState') {
                         _.each(data.A, dataPoints => {
                             _.each(dataPoints.Fills, fill => {
-                                let res = {
-                                    ts: parseInt(moment(fill.TimeStamp).add(1, 'hour').unix()),
-                                    pair: _.invert(pairData)[dataPoints.MarketName],
+                                fileWriter.write('bittrex', {
+                                    date: parseInt(moment(fill.TimeStamp).add(1, 'hour').unix()),
+                                    symbol: _.invert(pairData)[dataPoints.MarketName],
                                     amount: parseFloat(fill.Quantity),
-                                    rate: parseFloat(fill.Rate),
+                                    price: parseFloat(fill.Rate),
                                     id: null,
-                                    type: fill.OrderType === 'SELL' ? 'sell' : 'buy',
+                                    sell: fill.OrderType === 'SELL',
                                     exchange: 'bittrex'
-                                };
-                                fileWriter.write('bittrex', res);
+                                });
                             })
                         });
                     }

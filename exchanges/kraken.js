@@ -25,16 +25,15 @@ module.exports = (function() {
                         let exPairName = pairData[pairs[i]];
                         lastId = result.last;
                         _.each(result[exPairName], (res) => {
-                            let obj = {
-                                ts: parseInt(res[2]),
-                                pair: pairs[i],
+                            fileWriter.write('kraken', {
+                                date: parseInt(res[2]),
+                                symbol: pairs[i],
                                 amount: parseFloat(res[1]),
-                                rate: parseFloat(res[0]),
+                                price: parseFloat(res[0]),
                                 id: null,
-                                type: res[3] === 's' ? 'sell' : 'buy',
+                                sell: res[3] === 's',
                                 exchange: 'kraken'
-                            };
-                            fileWriter.write('kraken', obj);
+                            });
                         });
                     });
                 }).catch(console.error);

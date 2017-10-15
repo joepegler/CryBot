@@ -25,16 +25,15 @@ module.exports = (function() {
                     //     "M": true				// can be ignore
                     // }
                     trade = JSON.parse(trade);
-                    let res = {
-                        ts: parseInt(trade.E),
-                        pair: _.invert(pairData)[ePair],
+                    fileWriter.write('binance', {
+                        date: parseInt(trade.E),
+                        symbol: _.invert(pairData)[ePair],
                         amount: parseFloat(trade.q),
-                        rate: parseFloat(trade.p),
+                        price: parseFloat(trade.p),
                         id: parseInt(trade.a),
-                        type: null,
+                        sell: null,
                         exchange: 'binance'
-                    };
-                    fileWriter.write('binance', res);
+                    });
                 });
             })
         }

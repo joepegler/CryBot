@@ -15,16 +15,15 @@ module.exports = (function() {
                     channels[_.invert(pairData)[data.symbol]] = data.chanId;
                 }
                 else if(data[1] === 'tu') {
-                    let res = {
-                        ts: parseInt(data[2][1] / 1000),
-                        pair: _.invert(channels)[data[0]],
+                    fileWriter.write('bitfinex', {
+                        date: parseInt(data[2][1] / 1000),
+                        symbol: _.invert(channels)[data[0]],
                         amount: parseFloat(Math.abs(data[2][2])),
-                        rate: parseFloat(data[2][3]),
+                        price: parseFloat(data[2][3]),
                         id: null,
-                        type: data[2][2] > 0 ? 'buy' : 'sell',
+                        sell: data[2][2] === 0,
                         exchange: 'bitfinex'
-                    };
-                    fileWriter.write('bitfinex', res);
+                    });
                 }
             };
             ws.onopen = () => {
