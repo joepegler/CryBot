@@ -10,7 +10,7 @@ module.exports = (function () {
     const pairData = config.pairs;
 
     return {
-        init: function(db, pairs) {
+        init: function(fileWriter, pairs) {
 
             let exchangePairs = _.values(pairData).filter(exchangePair => { return _.includes(pairs, _.invert(pairData)[exchangePair]); });
 
@@ -27,7 +27,7 @@ module.exports = (function () {
                                 type: parseInt(trade.type) === 1 ? 'sell' : 'buy',
                                 exchange: 'bitstamp'
                             };
-                            db.write('bitstamp', 'trades', res);
+                            fileWriter.write('bitstamp', res);
                         })
                     });
                 });

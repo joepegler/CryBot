@@ -9,7 +9,7 @@ module.exports = (function () {
     const pairData = config.pairs;
 
     return {
-        init: function(db, pairs) {
+        init: function(fileWriter, pairs) {
 
             let ws = new WebSocket(wsUrl);
             let channels = {};
@@ -29,7 +29,7 @@ module.exports = (function () {
                         type: data[2][2] > 0 ? 'buy' : 'sell',
                         exchange: 'bitfinex'
                     };
-                    db.write('bitfinex', 'trades', res);
+                    fileWriter.write('bitfinex', res);
                 }
             };
 

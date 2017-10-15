@@ -7,7 +7,7 @@ module.exports = (function () {
     const pairData = config.pairs;
 
     return {
-        init: function(db, pairs) {
+        init: function(fileWriter, pairs) {
             let exchangePairs = _.values(pairData).filter(exchangePair => { return _.includes(pairs, _.invert(pairData)[exchangePair]); });
             exchangePairs.forEach(ePair => {
                 const websocket = new Gdax.WebsocketClient( ePair );
@@ -31,7 +31,7 @@ module.exports = (function () {
                             type: data.side,
                             exchange: 'gdax'
                         };
-                        db.write('gdax', 'trades', res);
+                        fileWriter.write('gdax', res);
                     }
                 });
                 websocket.on('error', console.error);

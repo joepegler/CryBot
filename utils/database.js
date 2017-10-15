@@ -2,7 +2,6 @@ module.exports = (function () {
 
     "use strict";
     const fs = require('fs');
-    const _ = require('lodash');
     const schedule = require('node-schedule');
     const validator = require('./validate');
     let io, alarm, hourly = '0 * * * *';
@@ -22,7 +21,7 @@ module.exports = (function () {
                 });
             });
         },
-        write : (exchangeName, table, object) => {
+        write : (exchangeName, object) => {
              if(validator.price(object)){
                  let message = JSON.stringify(object, null, 0) + ',';
                  fs.appendFile(fileOne, message, () => {io.emit('price', object);});

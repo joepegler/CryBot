@@ -10,7 +10,7 @@ module.exports = (function () {
     const lastTradeTs = {};
 
     return {
-        init: (db, pairs) => {
+        init: (fileWriter, pairs) => {
             setInterval(() => {
                 _.each(pairs, pair => {
                     if(_.includes(Object.keys(pairData), pair)) {
@@ -31,7 +31,7 @@ module.exports = (function () {
                                             type: trade[4],
                                             exchange: 'hitbtc'
                                         };
-                                        db.write('hitbtc', 'trades', res);
+                                        fileWriter.write('hitbtc', res);
                                     });
                                     let last = _.last(body.trades);
                                     if (last) lastTradeTs[pair] = _.last(body.trades)[3];

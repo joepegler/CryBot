@@ -8,7 +8,7 @@ module.exports = (function () {
     const pairData = config.pairs;
 
     return {
-        init: (db, pairs) => {
+        init: (fileWriter, pairs) => {
             let exchangePairs = _.values(pairData).filter(exchangePair => { return _.includes(pairs, _.invert(pairData)[exchangePair]); });
             bittrex.websockets.client(function () {
                 bittrex.websockets.subscribe(_.values(pairData), function (data) {
@@ -24,7 +24,7 @@ module.exports = (function () {
                                     type: fill.OrderType === 'SELL' ? 'sell' : 'buy',
                                     exchange: 'bittrex'
                                 };
-                                db.write('bittrex', 'trades', res);
+                                fileWriter.write('bittrex', res);
                             })
                         });
                     }

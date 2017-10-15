@@ -7,7 +7,7 @@ module.exports = (function () {
     const pairData = config.pairs;
 
     return {
-        init: (db, pairs)=>{
+        init: (fileWriter, pairs)=>{
             const KrakenClient = require('@warren-bank/node-kraken-api');
             const kraken = new KrakenClient();
             let lastId;
@@ -40,7 +40,7 @@ module.exports = (function () {
                                 type: res[3] === 's' ? 'sell' : 'buy',
                                 exchange: 'kraken'
                             };
-                            db.write('kraken', 'trades', obj);
+                            fileWriter.write('kraken', obj);
                         });
                     });
                 }).catch(console.error);
