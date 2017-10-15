@@ -6,7 +6,7 @@ module.exports = (function () {
     const schedule = require('node-schedule');
     const validator = require('./validate');
     let io, alarm, hourly = '0 * * * *';
-    let fileOne = './files/batch.txt', fileTwo = './files/last-batch.txt';
+    let fileOne = './files/current-batch.txt', fileTwo = './files/last-batch.txt';
 
     return {
         init: _io => {
