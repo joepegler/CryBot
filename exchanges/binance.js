@@ -35,6 +35,14 @@ module.exports = (function() {
                         exchange: 'binance'
                     });
                 });
+
+                ws.on('close', e => {
+                    _.throttle(() => {
+                        fileWriter.error(e, 'binance');
+                        ws = new WebSocket(wsUrl + '/' + ePair + '@aggTrade');
+                    }, 1000);
+                });
+
             })
         }
     }

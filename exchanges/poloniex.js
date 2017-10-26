@@ -29,7 +29,17 @@ module.exports = (function() {
                     }
                 });
             };
-            connection.onerror = console.error;
+            connection.onerror = (e) => {
+                _.throttle(() => {
+                    fileWriter.error(e, 'poloniex');
+                }, 1000);
+            };
+            connection.onclose = (e) => {
+                _.throttle(() => {
+                    fileWriter.error(e, 'poloniex');
+                    connection.open();
+                }, 1000);
+            };
             connection.open();
         }
     };

@@ -11,20 +11,28 @@ module.exports = (function() {
             setInterval(() => {
                 exchangePairs.forEach(ePair => {
                     bitstamp.transactions(ePair, function(err, trades) {
-                        _.each(trades, trade => {
-                            fileWriter.write('bitstamp', {
-                                date: parseInt(trade.date),
-                                symbol: _.invert(pairData)[ePair],
-                                amount: parseFloat(trade.amount),
-                                price: parseFloat(trade.price),
-                                id: trade.tid,
-                                sell: parseInt(trade.type) === 1,
-                                exchange: 'bitstamp'
-                            });
-                        })
+                        if(!err){
+                            _.each(trades, trade => {
+                                fileWriter.write('bitstamp', {
+                                    date: parseInt(trade.date),
+                                    symbol: _.invert(pairData)[ePair],
+                                    amount: parseFloat(trade.amount),
+                                    price: parseFloat(trade.price),
+                                    id: trade.tid,
+                                    sell: parseInt(trade.type) === 1,
+                                    exchange: 'bitstamp'
+                                });
+                            })
+                        }
+                        else {
+                            _.throttle(() => {
+                                fileWriter.error(err, 'bitstamp');
+                            }, 1000);
+                        }
+
                     });
                 });
-            }, 3000);
+            }, 5000);
         }
     }
 })();

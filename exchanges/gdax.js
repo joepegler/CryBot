@@ -9,7 +9,7 @@ module.exports = (function() {
         init: function(fileWriter, pairs) {
             let exchangePairs = _.values(pairData).filter(exchangePair => { return _.includes(pairs, _.invert(pairData)[exchangePair]); });
             exchangePairs.forEach(ePair => {
-                const websocket = new Gdax.WebsocketClient(ePair);
+                let websocket = new Gdax.WebsocketClient(ePair);
                 websocket.on('message', data => {
                     if(data.type === 'match') {
                         // {
@@ -32,8 +32,17 @@ module.exports = (function() {
                         });
                     }
                 });
-                websocket.on('error', console.error);
-                websocket.on('close', console.error);
+                websocket.on('error', e => {
+                    _.throttle(() => {
+                        fileWriter.error(e, 'gdax');
+                    }, 1000);
+                });
+                websocket.on('close', e => {
+                    _.throttle(() => {
+                        fileWriter.error(e, 'gdax');
+                        websocket = new Gdax.WebsocketClient(ePair);
+                    }, 1000);
+                });
             });
         }
     }

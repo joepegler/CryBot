@@ -4,8 +4,9 @@ module.exports = (function () {
     const fs = require('fs');
     const schedule = require('node-schedule');
     const validator = require('./validate');
+    const moment = require('moment');
     let io, alarm, hourly = '0 * * * *';
-    let fileOne = './files/current-batch.txt', fileTwo = './files/last-batch.txt';
+    let fileOne = './logs/current-batch.txt', fileTwo = './logs/last-batch.txt', errFileName = './logs/error.log';
 
     return {
         init: _io => {
@@ -26,6 +27,11 @@ module.exports = (function () {
                  let message = JSON.stringify(object, null, 0) + ',';
                  fs.appendFile(fileOne, message, () => { io && io.emit('price', object); });
              }
+        },
+        error: (err, exchangeName, callback) => {
+            err = '[' +  moment( new Date() ).format('YY-DD-MM HH:mm:ss') + ']' + exchangeName.toUpperCase() + ': ' + (typeof err === 'string' ? err : (err.message ? err.message : JSON.stringify(err))) + '\n';
+            fs.appendFile(errFileName, err);
+            callback && callback();
         }
     }
 

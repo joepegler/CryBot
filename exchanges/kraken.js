@@ -8,6 +8,7 @@ module.exports = (function() {
             const KrakenClient = require('@warren-bank/node-kraken-api');
             const kraken = new KrakenClient();
             let lastId;
+
             setInterval(() => {
                 let promises = pairs.map((pair, i) => {
                     return new Promise((resolve, reject) => {
@@ -20,6 +21,7 @@ module.exports = (function() {
                         }
                     });
                 });
+
                 Promise.all(promises).then(results => {
                     _.each(results, (result, i) => {
                         let exPairName = pairData[pairs[i]];
@@ -36,8 +38,13 @@ module.exports = (function() {
                             });
                         });
                     });
-                }).catch(console.error);
-            }, 3000);
+                }).catch(e => {
+                    _.throttle(() => {
+                        fileWriter.error(e, 'kraken');
+                    }, 1000);
+                });
+
+            }, 5000);
         }
     }
 })();

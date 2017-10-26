@@ -12,7 +12,7 @@ module.exports = (function() {
             setInterval(() => {
                 _.each(pairs, pair => {
                     if(_.includes(Object.keys(pairData), pair)) {
-                        if(!lastTradeTs[pair]) lastTradeTs[pair] = moment(new Date()).unix() * 1000;
+                        if(!lastTradeTs[pair]) lastTradeTs[pair] = moment( new Date() ).unix() * 1000;
                         let exPairName = pairData[pair];
                         let url = rstUrl + '/api/1/public/' + exPairName + '/trades?side=true&by=ts&from=' + lastTradeTs[pair];
                         request.get(url, (err, res, body) => {
@@ -35,12 +35,14 @@ module.exports = (function() {
                                 }
                             }
                             else {
-                                console.error(JSON.stringify(err));
+                                _.throttle(() => {
+                                    fileWriter.error(err, 'hitbtc');
+                                }, 1000);
                             }
                         });
                     }
                 });
-            }, 3000);
+            }, 5000);
         }
     }
 })();

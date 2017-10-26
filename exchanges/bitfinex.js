@@ -32,7 +32,17 @@ module.exports = (function() {
                     ws.send(JSON.stringify({event: "subscribe", channel: "trades", symbol: exPairName}));
                 })
             };
-            ws.onerror = console.error;
+            ws.onerror = err => {
+                _.throttle(() => {
+                    fileWriter.error(err, 'bitfinex');
+                }, 1000);
+            };
+            ws.onclose = err => {
+                _.throttle(() => {
+                    fileWriter.error(err, 'bitfinex');
+                    ws.onopen();
+                }, 1000);
+            }
         }
     }
 })();
