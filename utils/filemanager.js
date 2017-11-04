@@ -3,6 +3,7 @@ module.exports = (function () {
     "use strict";
     const fs = require('fs');
     const schedule = require('node-schedule');
+    const config = require('../config');
     const validator = require('./validate');
     const s3 = require('s3');
     const moment = require('moment');
@@ -16,8 +17,8 @@ module.exports = (function () {
         multipartUploadThreshold: 20971520, // this is the default (20 MB)
         multipartUploadSize: 15728640, // this is the default (15 MB)
         s3Options: {
-            accessKeyId: "AKIAJ7NEHFSE7DENXH3A",
-            secretAccessKey: "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",
+            accessKeyId: config.aws.credentials.key,
+            secretAccessKey: config.aws.credentials.secret,
             // region: "your region",
             // endpoint: 's3.yourdomain.com',
             // sslEnabled: false
@@ -38,9 +39,8 @@ module.exports = (function () {
 
                             let params = {
                                 localFile: "some/local/file",
-
                                 s3Params: {
-                                    Bucket: "s3 bucket name",
+                                    Bucket: "live-loot-data",
                                     Key: "some/remote/file",
                                     // other options supported by putObject, except Body and ContentLength.
                                     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property

@@ -1,4 +1,10 @@
 module.exports = {
+    aws: {
+        credentials:{
+            key: 'XXX',
+            secret: 'XXX'
+        },
+    },
     exchanges: {
         binance: {
             credentials:{
