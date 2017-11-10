@@ -14,6 +14,7 @@
     "@warren-bank/node-kraken-api": "^3.0.0",
     "archiver": "^2.1.0",
     "autobahn": "^17.5.2",
+    "aws-sdk": "^2.149.0",
     "bitstamp": "^1.0.4",
     "bitstamp-ws": "^0.1.1",
     "bufferutil": "^1.3.0",
@@ -22,7 +23,6 @@
     "gdax": "git://github.com/coinbase/gdax-node.git#ff88ec1",
     "helmet": "^3.8.2",
     "http": "0.0.0",
-    "jszip": "^3.1.4",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "net": "^1.0.2",
@@ -31,7 +31,6 @@
     "poloniex-api-node": "^1.3.1",
     "promise": "^8.0.1",
     "request": "^2.83.0",
-    "s3": "^4.4.0",
     "socket.io": "^2.0.3",
     "ws": "^3.2.0"
   }
