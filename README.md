@@ -1,6 +1,6 @@
 # CryBot
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+Collects live pair prices from various exchanges. 
 
 ## Running Locally
 
